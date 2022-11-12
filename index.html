@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    データの塊（オブジェクト）
+
+    <script>
+    // javascriptの演習、練習を書いていきます
+    // alert(1)
+    
+    // データの塊は波括弧で作ります
+    // 「鍵:データ値」の塊のあとに必ずカンマを入れる
+    const gs = {
+        staff: 'おおほりちーふ',
+        age: '28',
+        money: '2000万',
+    }
+
+    // 「データの塊(gs)＋ドット＋鍵の名前(staff, age, moneyなど)」でアクセスする
+    // 28というものを表示したい！どうするの？
+    // gs.age // 28というデータが取れます
+    // javascriptはすべてデータの塊（オブジェクト）として提供されている
+    console.log(gs.age, '何が表示される？');
+    console.log(gs.money, '何が表示される？');
+
+    const member = {
+        name: 'とうまうらら',
+    }
+    console.log(member.name, '何が表示される？');
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Firebase_version9_RealtimeDB(G'sACADEMY初学者用サンプル)</title>
+<style>
+    #output{
+
+    }
+</style>
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+
+<div>
+    <div> 名前：<input type="text" id="uname"> </div>
+    <div>
+        <textarea id="text" cols="30" rows="10"></textarea>
+        <button id="send">送信</button>
+    </div>
+    <div>
+
+    </div>
+    <div id="output"></div>
+</div>
+<!--/ コンテンツ表示画面 -->
+
+
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- JQuery -->
+
+
+<!--** 以下Firebase **-->
+<!-- Firebaseからコピーする -->
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+    import { getDatabase, ref, push, set, onChildAdded, remove,onChildRemoved } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      //キーをいれる
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // ここにRealtime Databaseに接続するための２行を追加する
+    const db = getDatabase(app); 
+    const dbRef = ref(db, "dev245");
+
+    // 送信処理を記述する
+    $('#send').on('click', function(){
+    // id="uname"の場所を取得します
+    const uname = $('#uname').val();
+    console.log(uname, 'データの取得の仕方で表示が異なるのをチェックしましょう')
+    // id="text"の場所を取得します
+    const text = $('#text').val();
+    console.log(text, 'データの取得の仕方で表示が異なるのをチェックしましょう')
+    // 取得できているか表示の確認をすること
+    alert(uname, text);
+
+    // データの塊を作ります
+    // msgという名前で塊をつくります
+    // unameという鍵の名前
+    // textという鍵の名前
+    // 作成したデータの塊をfirebaseに送信んします。つまりこれが保存になります。
+    const msg = {
+        uname: uname,
+        text: text,
+    }
+
+    // firebaseに送る準備をする
+    const newPostRef = push(dbRef) //データを送信できる準備
+    set(newPostRef, msg); //firebaseの登録できる場所に保存するイメージ
+
+    // 送信後に入力欄をからにしましょう
+    $('#uname').val("");
+    $('#text').val("");
+
+    // focusで特定した場所にカーソルが移動する（操作性の向上）
+    $('#uname').focus("");
+
+    // send送信イベント　この下消さない
+    });
+
+
+
+
+    // 受信処理を記述する
+    onChildAdded(dbRef, function(data){
+        //ここから受信処理が始まります
+
+        //登録されたデータを取得します
+        const msg = data.val();
+        console.log(msg, '登録したデータの塊')
+        const key = data.key;
+        console.log(key, 'データの塊にアクセス')
+
+        // es6のテンプレートリテラルを使う
+        let h = `
+            <div class="msg">
+                <p>${msg.uname}</p>
+                <p>${msg.text}</p>
+            </div>
+        `;
+        // htmlに埋め込みましょう 
+        //append();というjQueryのおまじないを使います
+        $("#output").append(h);
+    })
+
+  </script>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
